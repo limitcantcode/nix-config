@@ -1,0 +1,3 @@
+{
+    programs.iotop.enable = true;
+}

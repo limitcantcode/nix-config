@@ -1,0 +1,3 @@
+{
+    programs.zip.enable = true;
+}

@@ -1,0 +1,3 @@
+{
+    programs.strace.enable = true;
+}

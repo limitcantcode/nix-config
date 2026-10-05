@@ -1,0 +1,3 @@
+{
+    programs.unzip.enable = true;
+}

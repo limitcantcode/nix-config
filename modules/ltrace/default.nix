@@ -1,0 +1,3 @@
+{
+    programs.ltrace.enable = true;
+}
