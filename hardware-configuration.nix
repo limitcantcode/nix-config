@@ -3,6 +3,25 @@
 # to /etc/nixos/configuration.nix instead.
 { config, lib, pkgs, modulesPath, ... }:
 
+let
+  mkNasMount = device: {
+    device = device;
+    fsType = "cifs";
+    options = [
+      "credentials=/etc/nixos/secrets/cifs.credentials"
+      "uid=1000"
+      "gid=100"
+      "file_mode=0644"
+      "dir_mode=0755"
+      "iocharset=utf8"
+      "vers=3.0"
+      "nosuid"
+      "nodev"
+      "_netdev"
+      "x-systemd.idle-timeout=600"
+    ];
+  };
+in
 {
   imports =
     [ (modulesPath + "/installer/scan/not-detected.nix")
@@ -10,7 +29,7 @@
 
   boot.initrd.availableKernelModules = [ "nvme" "xhci_pci" "usbhid" "usb_storage" "sd_mod" "sdhci_pci" ];
   boot.initrd.kernelModules = [ ];
-  boot.kernelModules = [ "kvm-amd" ];
+  boot.kernelModules = [ "kvm-amd" "cifs" ];
   boot.extraModulePackages = [ ];
 
   fileSystems."/" =
@@ -33,4 +52,9 @@
     enable = true;
     enable32Bit = true;
   };
+
+  # Limit's NAS
+  fileSystems."/mnt/nas-misc" = mkNasMount "//nas.lcc/MAIN";
+  fileSystems."/mnt/nas-ai" = mkNasMount "//nas.lcc/AI";
+  fileSystems."/mnt/nas-editing" = mkNasMount "//nas.lcc/Editing";
 }

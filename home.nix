@@ -1,4 +1,5 @@
-{ inputs, ... }:
+{ inputs, config, ... }:
+
 {
   programs.home-manager.enable = true;
   home.stateVersion = "26.05";
@@ -25,5 +26,8 @@
     #   org.gradle.console=verbose
     #   org.gradle.daemon.idletimeout=3600000
     # '';
+    "nas-misc".source = config.lib.file.mkOutOfStoreSymlink "/mnt/nas-misc";
+    "nas-ai".source = config.lib.file.mkOutOfStoreSymlink "/mnt/nas-ai";
+    "nas-editing".source = config.lib.file.mkOutOfStoreSymlink "/mnt/nas-editing";
   };
 }
