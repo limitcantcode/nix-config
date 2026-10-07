@@ -33,6 +33,7 @@
     wget
     zip
     unzip
+    uv
     glow
     nnn
     btop
